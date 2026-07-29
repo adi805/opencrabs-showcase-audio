@@ -1,0 +1,7 @@
+node_modules/
+out/
+*.log
+.env
+.env.local
+render_pause.lock
+.DS_Store

@@ -1,0 +1,44 @@
+{
+  "name": "remotion-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-ready Remotion video generation platform with Zod validation, dynamic metadata, audio sync, and BullMQ queue.",
+  "scripts": {
+    "dev": "npx remotion studio",
+    "build": "npx remotion render src/index.ts PromoVideo out/promo.mp4",
+    "build:custom": "npx remotion render src/index.ts PromoVideo out/promo.mp4 --props",
+    "benchmark": "npx remotion benchmark",
+    "qa": "python3 scripts/review-render.py out/promo.mp4 config/qa-reference.json",
+    "monitor": "bash scripts/monitor-vps.sh",
+    "worker": "tsx scripts/render-worker.js",
+    "test": "tsx test-schema.js",
+    "test:types": "tsc --noEmit",
+    "render:smoke": "rm -f out/test-smoke.mp4 && npx remotion render src/index.ts PromoVideo out/test-smoke.mp4 --frames=0-30",
+    "render:full": "rm -f out/promo-full.mp4 && npx remotion render src/index.ts PromoVideo out/promo-full.mp4",
+    "render:smoke:audio": "rm -f out/test-smoke.mp4 out/test-smoke-muxed.mp4 && npx remotion render src/index.ts PromoVideo out/test-smoke.mp4 --frames=0-30 && bash scripts/mux-audio.sh out/test-smoke.mp4 public/bgm/bgm.wav out/test-smoke-muxed.mp4 0.5",
+    "render:full:audio": "rm -f out/promo-full.mp4 out/promo-full-muxed.mp4 && npx remotion render src/index.ts PromoVideo out/promo-full.mp4 && bash scripts/mux-audio.sh out/promo-full.mp4 public/bgm/bgm.wav out/promo-full-muxed.mp4 0.5",
+    "render:qa": "npm run render:smoke && python3 scripts/review-render.py out/test-smoke.mp4 config/qa-reference.json",
+    "render:qa:full": "npm run render:full && python3 scripts/review-render.py out/promo-full.mp4 config/qa-reference.json"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.500",
+    "@remotion/media": "4.0.500",
+    "@remotion/media-utils": "4.0.500",
+    "@remotion/zod-types": "4.0.500",
+    "bullmq": "5.21.0",
+    "ioredis": "5.4.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.500",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.2",
+    "@types/react": "19.2.17",
+    "tsx": "^4.23.1",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

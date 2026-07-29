@@ -1,0 +1,10 @@
+{
+  "target_duration": 5.0,
+  "target_width": 1920,
+  "target_height": 1080,
+  "target_fps": 30,
+  "audio_loudness_db": -36.0,
+  "max_file_size_mb": 50,
+  "codec": "h264",
+  "audio_codec": "aac"
+}
